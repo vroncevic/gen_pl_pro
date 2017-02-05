@@ -1,0 +1,163 @@
+${HASH}"!/usr/bin/perl"
+${HASH}
+${HASH}" @brief    ${PNAME}"
+${HASH}" @version  ${VERSION}"
+${HASH}" @date     ${DATE}"
+${HASH}" @company  ${UTIL_FROM_COMPANY}"
+${HASH}" @author   ${AUTHOR_NAME}<${AUTHOR_EMAIL}>"
+${HASH}
+"use strict;"
+"use warnings;"
+"use Sys::Hostname;"
+"use Getopt::Long;"
+"use Pod::Usage;"
+"use File::Basename qw(dirname);"
+"use Cwd qw(abs_path);"
+"use lib dirname(dirname(abs_path(__FILE__))) . '/../../lib/perl5';"
+"use InfoDebugMessage qw(info_debug_message);"
+"use Logging qw(logging);"
+"use Configuration qw (read_preference);"
+"use Notification qw(notify);"
+"use Status;"
+
+"our \\\$TOOL_DBG=\\\"false\\\";"
+
+${HASH}
+${HASH}" @brief   TODO"
+${HASH}" @param   TODO"
+${HASH}" @exitval Success 0, else 128, 129, 130"
+${HASH}
+${HASH}" @usage"
+${HASH}" @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+${HASH}
+${HASH}" ${PNAME}()"
+${HASH}
+"sub ${PNAME} {"
+${TAB}"my (\\\$fcaller, \\\$host) = ((caller(0))[3], hostname());"
+${TAB}"my (%preferences, \\\$toolHome, \\\$cfg, \\\$log, \\\$msg);"
+${TAB}"\\\$toolHome = dirname(dirname(abs_path(__FILE__)));"
+${TAB}"\\\$cfg = \\\$toolHome . \\\"/conf/${PNAME}.cfg\\\";"
+${TAB}"\\\$log = \\\$toolHome . \\\"/log/${PNAME}.log\\\";"
+${TAB}"if(readpref(\\\$cfg, \\\%preferences) == \\\$NOT_SUCCESS) {"
+${TAB}${TAB}"exit(128);"
+${TAB}"}"
+${TAB}"my (%notification, %logger, \\\$log_line);"
+${TAB}"\\\$notification{ADMIN_EMAIL}=\\\$preferences{ADMIN_EMAIL};"
+${TAB}"\\\$notification{EMAIL_FROM}=\\\"${PNAME}\@\\\$host\\\";"
+${TAB}"\\\$logger{LOG_FILE_PATH}=\\\$log;"
+${TAB}"\\\$log_line = \\\"Some LOG line\\\";"
+${TAB}"\\\$logger{LOG_MESSAGE}=\\\"\\\$log_line\\\";"
+${TAB}"if(logging(\\\%logger) == \\\$NOT_SUCCESS) {"
+${TAB}${TAB}"exit(129);"
+${TAB}"}"
+${TAB}"\\\$notification{MESSAGE}=\\\$logger{LOG_MESSAGE};"
+${TAB}"if(notify(\\\$notification_ref) == \\\$NOT_SUCCESS) {"
+${TAB}"${TAB}exit(130);"
+${TAB}"}"
+${TAB}${HASH}
+${TAB}${HASH}" Code goes here"
+${TAB}${HASH}
+${TAB}"\\\$msg = \\\"Done\\\";"
+${TAB}"info_debug_message(\\\$msg);"
+${TAB}"exit(0);"
+"}"
+
+${HASH}
+${HASH}" @brief   Main entry point"
+${HASH}" @param   Value optional help | manual"
+${HASH}" @exitval Script tool pinger exit with integer value"
+${HASH} ${TAB}${TAB}"0   - success operation"
+${HASH} ${TAB}${TAB}"127 - run as root user"
+${HASH} ${TAB}${TAB}"128 - failed to load Configuration"
+${HASH} ${TAB}${TAB}"129 - failed to write log message"
+${HASH} ${TAB}${TAB}"130 - failed to send email"
+${HASH}
+"my (\\\$help, \\\$man) = (0, 0);"
+
+"if(@ARGV > 0) {"
+${TAB}"GetOptions("
+${TAB}${TAB}"'help|?' => \\\$help,"
+${TAB}${TAB}"'manual' => \\\$man"
+${TAB}") || pod2usage(2);"
+"}"
+
+"if(\\\$man || \\\$help) {"
+${TAB}"if(\\\$help) {"
+${TAB}${TAB}"pod2usage(1);"
+${TAB}"}"
+${TAB}"if(\\\$man) {"
+${TAB}${TAB}"pod2usage(VERBOSE => 2);"
+${TAB}"}"
+"}"
+
+"my \\\$username = (getpwuid(\\\$>));"
+"my \\\$uid = (\\\$<);"
+
+"if((\\\$username eq \\\"root\\\") && (\\\$uid == 0)) {"
+${TAB}"${PNAME}();"
+"}"
+
+"exit(127);"
+"__END__"
+"############################## POD ${PNAME}.pl ###############################"
+
+"=head1 NAME"
+
+"${PNAME} - descriptions"
+
+"=head1 SYNOPSIS"
+
+"Use:"
+
+"${TAB}${PNAME} [options]"
+
+"Examples:"
+
+"${TAB}${PNAME} help"
+
+"${TAB}${PNAME} man"
+
+"${TAB}# Ping operation and logging statistics"
+
+"${TAB}${PNAME}"
+
+"=head1 DESCRIPTION"
+
+"This script is for ping operation and logging statistics."
+
+"=head1 ARGUMENTS"
+
+"${PNAME} takes the following arguments:"
+
+"=over 2"
+
+"=item help"
+
+"${TAB}help"
+
+"(Optional.) Show help info information"
+
+"=item manual"
+
+"${TAB}help"
+
+"(Optional.) Display manual information"
+
+'=back'
+
+"=head1 AUTHOR"
+
+"${AUTHOR_NAME}, E<lt>${AUTHOR_EMAIL}E<gt>."
+
+"=head1 COPYRIGHT"
+
+"This program is free to use and distributed under GPLv3."
+
+"=head1 DATE"
+
+"${DATE}"
+
+"=cut"
+
+"############################## POD ${PNAME}.pl ###############################"
+

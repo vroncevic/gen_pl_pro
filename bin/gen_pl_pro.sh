@@ -57,10 +57,9 @@ TOOL_NOTIFY="false"
 # @param   Value required project name
 # @retval  Function __gen_pl_pro exit with integer value
 #			0   - tool finished with success operation 
-#			128 - missing argument(s) from cli 
-#			129 - failed to load tool script configuration from file 
-#			130 - failed to load tool script utilities configuration from file
-#			131 - project already exist
+#			128 - missing argument(s) from cli
+#			129 - failed to load tool script configuration from files
+#			130 - project already exist
 #
 # @usage
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -100,7 +99,7 @@ function __gen_pl_pro() {
 			__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 			MSG="Force exit!"
 			__info_debug_message_end "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-			exit 131
+			exit 130
 		fi
 		MSG="Generating directory [${PNAME}/]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
@@ -178,12 +177,11 @@ function __gen_pl_pro() {
 # @brief   Main entry point of script tool
 # @param   Value required project name
 # @exitval Script tool gen_pl_pro exit with integer value
-#			0   - tool finished with success operation 
+#			0   - tool finished with success operation
 # 			127 - run tool script as root user from cli
-#			128 - missing argument(s) from cli 
-#			129 - failed to load tool script configuration from file 
-#			130 - failed to load tool script utilities configuration from file
-#			131 - project already exist
+#			128 - missing argument(s) from cli
+#			129 - failed to load tool script configuration from files
+#			130 - project already exist
 #
 printf "\n%s\n%s\n\n" "${GEN_PL_PRO_TOOL} ${GEN_PL_PRO_VERSION}" "`date`"
 __check_root

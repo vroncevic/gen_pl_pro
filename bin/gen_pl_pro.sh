@@ -93,29 +93,24 @@ function __gen_pl_pro() {
 		TOOL_LOG=${config_gen_pl_pro[LOGGING]}
 		TOOL_DBG=${config_gen_pl_pro[DEBUGGING]}
 		TOOL_NOTIFY=${config_gen_pl_pro[EMAILING]}
-		MSG="Generating project structure [${PNAME}]!"
+		MSG="Generating project structure [${PNAME}]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		GEN_PL_PRO_LOGGING[LOG_MSGE]="$MSG"
-		GEN_PL_PRO_LOGGING[LOG_FLAG]="info"
-		__logging GEN_PL_PRO_LOGGING
 		if [ -d "${PNAME}/" ]; then
 			MSG="Project structure already exist [${PNAME}]"
-			GEN_PL_PRO_LOGGING[LOG_MSGE]="$MSG"
-			GEN_PL_PRO_LOGGING[LOG_FLAG]="info"
-			__logging GEN_PL_PRO_LOGGING
-			MSG="Force exit!"
 			__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
+			MSG="Force exit!"
+			__info_debug_message_end "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 			exit 131
 		fi
-		MSG="Generating directory [${PNAME}/]!"
+		MSG="Generating directory [${PNAME}/]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 		mkdir "${PNAME}/"
-		MSG="Generating directory [${PNAME}/bin/]!"
+		MSG="Generating directory [${PNAME}/bin/]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 		mkdir "${PNAME}/bin/"
 		MSG="Generating file [${PNAME}/bin/${PNAME}.pl]!"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		local HASH="#" TAB="	" DATE=`date` BSLASH="\\" PL
+		local HASH="#" TAB="	" DATE=`date` BSLASH="\\" PL TREE
 		local PT=${config_gen_pl_pro_util[PERL_TEMPLATE]}
 		local AUTHOR_NAME=${config_gen_pl_pro_util[AUTHOR_NAME]}
 		local AUTHOR_EMAIL=${config_gen_pl_pro_util[AUTHOR_EMAIL]}
@@ -139,7 +134,7 @@ function __gen_pl_pro() {
 		do
 			eval echo "${CL}" >> ${CFG}
 		done < ${CFGT}
-		MSG="Generating file [${PNAME}/conf/${PNAME}_util.cfg]!"
+		MSG="Generating file [${PNAME}/conf/${PNAME}_util.cfg]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 		local CFGU="${PNAME}/conf/${PNAME}_util.cfg"
 		local CTU=${config_gen_pl_pro_util[CFG_UTIL_TEMPLATE]}
@@ -148,10 +143,10 @@ function __gen_pl_pro() {
 		do
 			eval echo "${CL}" >> ${CFGU}
 		done < ${CFGTU}
-		MSG="Generating directory [${PNAME}/log/]!"
+		MSG="Generating directory [${PNAME}/log/]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 		mkdir "${PNAME}/log/"
-		MSG="Generating file [${PNAME}/log/${PNAME}.log]!"
+		MSG="Generating file [${PNAME}/log/${PNAME}.log]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 		touch "${PNAME}/log/${PNAME}.log"
 		MSG="Set owner!"
@@ -167,6 +162,12 @@ function __gen_pl_pro() {
 		GEN_PL_PRO_LOGGING[LOG_FLAG]="info"
 		__logging GEN_PL_PRO_LOGGING
 		__info_debug_message_end "Done" "$FUNC" "$GEN_PL_PRO_TOOL"
+		TREE=$(which tree)
+		__check_tool "${TREE}"
+		STATUS=$?
+		if [ $STATUS -eq $SUCCESS ]; then
+			eval "${TREE} -L 3 ${PNAME}/"
+		fi
 		exit 0
 	fi
 	__usage GENPLPRO_USAGE

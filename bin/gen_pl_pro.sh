@@ -30,7 +30,7 @@ GEN_PL_PRO_LOG=${GEN_PL_PRO_HOME}/log
 
 declare -A GENPLPRO_USAGE=(
 	[USAGE_TOOL]="${GEN_PL_PRO_TOOL}"
-	[USAGE_ARG1]="[PNAME] Perl App Project name"
+	[USAGE_ARG1]="[PN] Perl App Project name"
 	[USAGE_EX_PRE]="# Generating Perl App project"
 	[USAGE_EX]="${GEN_PL_PRO_TOOL} RCP"
 )
@@ -67,8 +67,8 @@ TOOL_NOTIFY="false"
 # __gen_pl_pro "rtp"
 #
 function __gen_pl_pro() {
-	local PNAME=$1
-	if [ -n "${PNAME}" ]; then
+	local PN=$1
+	if [ -n "${PN}" ]; then
 		local FUNC=${FUNCNAME[0]} MSG="None" STATUS_CONF STATUS_CONF_UTIL STATUS
 		MSG="Loading basic and util configuration!"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
@@ -92,71 +92,71 @@ function __gen_pl_pro() {
 		TOOL_LOG=${config_gen_pl_pro[LOGGING]}
 		TOOL_DBG=${config_gen_pl_pro[DEBUGGING]}
 		TOOL_NOTIFY=${config_gen_pl_pro[EMAILING]}
-		MSG="Generating project structure [${PNAME}]"
+		MSG="Generating project structure [${PN}]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		if [ -d "${PNAME}/" ]; then
-			MSG="Project structure already exist [${PNAME}]"
+		if [ -d "${PN}/" ]; then
+			MSG="Project structure already exist [${PN}]"
 			__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 			MSG="Force exit!"
 			__info_debug_message_end "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 			exit 130
 		fi
-		MSG="Generating directory [${PNAME}/]"
+		MSG="Generating directory [${PN}/]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		mkdir "${PNAME}/"
-		MSG="Generating directory [${PNAME}/bin/]"
+		mkdir "${PN}/"
+		MSG="Generating directory [${PN}/bin/]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		mkdir "${PNAME}/bin/"
-		MSG="Generating file [${PNAME}/bin/${PNAME}.pl]!"
+		mkdir "${PN}/bin/"
+		MSG="Generating file [${PN}/bin/${PN}.pl]!"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		local HASH="#" TAB="	" DATE=`date` BSLASH="\\" PL TREE
+		local H="#" DATE=`date` BSL="\\" PL TREE T="	"
 		local PT=${config_gen_pl_pro_util[PERL_TEMPLATE]}
-		local AUTHOR_NAME=${config_gen_pl_pro_util[AUTHOR_NAME]}
-		local AUTHOR_EMAIL=${config_gen_pl_pro_util[AUTHOR_EMAIL]}
+		local AN=${config_gen_pl_pro_util[AUTHOR_NAME]}
+		local AE=${config_gen_pl_pro_util[AUTHOR_EMAIL]}
 		local USER=${config_gen_pl_pro_util[USER]}
 		local GROUP=${config_gen_pl_pro_util[GROUP]}
-		local VERSION=${config_gen_pl_pro_util[VERSION]}
-		local PLF="${PNAME}/bin/${PNAME}.pl" PLT="${GEN_PL_PRO_HOME}/conf/${PT}"
+		local V=${config_gen_pl_pro_util[VERSION]}
+		local PLF="${PN}/bin/${PN}.pl" PLT="${GEN_PL_PRO_HOME}/conf/${PT}"
 		while read PL
 		do
 			eval echo "${PL}" >> ${PLF}
 		done < ${PLT}
-		MSG="Generating directory [${PNAME}/conf/]!"
+		MSG="Generating directory [${PN}/conf/]!"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		mkdir "${PNAME}/conf/"
-		MSG="Generating file [${PNAME}/conf/${PNAME}.cfg]!"
+		mkdir "${PN}/conf/"
+		MSG="Generating file [${PN}/conf/${PN}.cfg]!"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		local CFG="${PNAME}/conf/${PNAME}.cfg" CL
+		local CFG="${PN}/conf/${PN}.cfg" CL
 		local CT=${config_gen_pl_pro_util[CFG_TEMPLATE]}
 		local CFGT="${GEN_PL_PRO_HOME}/conf/${CT}"
 		while read CL
 		do
 			eval echo "${CL}" >> ${CFG}
 		done < ${CFGT}
-		MSG="Generating file [${PNAME}/conf/${PNAME}_util.cfg]"
+		MSG="Generating file [${PN}/conf/${PN}_util.cfg]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		local CFGU="${PNAME}/conf/${PNAME}_util.cfg"
+		local CFGU="${PN}/conf/${PN}_util.cfg"
 		local CTU=${config_gen_pl_pro_util[CFG_UTIL_TEMPLATE]}
 		local CFGTU="${GEN_PL_PRO_HOME}/conf/${CTU}"
 		while read CL
 		do
 			eval echo "${CL}" >> ${CFGU}
 		done < ${CFGTU}
-		MSG="Generating directory [${PNAME}/log/]"
+		MSG="Generating directory [${PN}/log/]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		mkdir "${PNAME}/log/"
-		MSG="Generating file [${PNAME}/log/${PNAME}.log]"
+		mkdir "${PN}/log/"
+		MSG="Generating file [${PN}/log/${PN}.log]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		touch "${PNAME}/log/${PNAME}.log"
+		touch "${PN}/log/${PN}.log"
 		MSG="Set owner!"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 		local USRID=${config_gen_pl_pro_util[UID]}
 		local GRPID=${config_gen_pl_pro_util[GID]}
-		eval "chown -R ${USRID}.${GRPID} ${PNAME}/"
+		eval "chown -R ${USRID}.${GRPID} ${PN}/"
 		MSG="Set permission!"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		eval "chmod -R 700 ${PNAME}/"
-		MSG="Generated project structure [${PNAME}]"
+		eval "chmod -R 700 ${PN}/"
+		MSG="Generated project structure [${PN}]"
 		GEN_PL_PRO_LOGGING[LOG_MSGE]="$MSG"
 		GEN_PL_PRO_LOGGING[LOG_FLAG]="info"
 		__logging GEN_PL_PRO_LOGGING
@@ -165,7 +165,7 @@ function __gen_pl_pro() {
 		__check_tool "${TREE}"
 		STATUS=$?
 		if [ $STATUS -eq $SUCCESS ]; then
-			eval "${TREE} -L 3 ${PNAME}/"
+			eval "${TREE} -L 3 ${PN}/"
 		fi
 		exit 0
 	fi

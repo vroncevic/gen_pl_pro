@@ -53,13 +53,14 @@ TOOL_LOG="false"
 TOOL_NOTIFY="false"
 
 #
-# @brief   Main function 
+# @brief   Main function
 # @param   Value required project name
 # @retval  Function __gen_pl_pro exit with integer value
-#			0   - tool finished with success operation 
+#			0   - tool finished with success operation
 #			128 - missing argument(s) from cli
 #			129 - failed to load tool script configuration from files
 #			130 - project already exist
+#			131 - failed to load project set configuration from file
 #
 # @usage
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -92,7 +93,7 @@ function __gen_pl_pro() {
 		TOOL_LOG=${config_gen_pl_pro[LOGGING]}
 		TOOL_DBG=${config_gen_pl_pro[DEBUGGING]}
 		TOOL_NOTIFY=${config_gen_pl_pro[EMAILING]}
-		MSG="Generating project structure [${PN}]"
+		MSG="Generating project structure!"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 		if [ -d "${PN}/" ]; then
 			MSG="Project structure already exist [${PN}]"
@@ -101,62 +102,95 @@ function __gen_pl_pro() {
 			__info_debug_message_end "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 			exit 130
 		fi
-		MSG="Generating directory [${PN}/]"
+		local PROJECT_SET=${config_gen_pl_pro_util[PROJECT_SET]} CDIR=`pwd`
+		declare -A project_set=()
+		__load_util_conf "${GEN_PL_PRO_HOME}/conf/${PROJECT_SET}" project_set
+		STATUS=$?
+		if [ $STATUS -eq $NOT_SUCCESS ]; then
+			MSG="Force exit!"
+			__info_debug_message_end "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
+			exit 131
+		fi
+		local PDIR="${CDIR}/${PN}"
+		MSG="Generating directory [${PDIR}/]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		mkdir "${PN}/"
-		MSG="Generating directory [${PN}/bin/]"
+		mkdir "${PDIR}/"
+		MSG="Generating directory [${PDIR}/bin/]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		mkdir "${PN}/bin/"
-		MSG="Generating file [${PN}/bin/${PN}.pl]!"
-		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
+		mkdir "${PDIR}/bin/"
 		local H="#" DATE=`date` BSL="\\" PL TREE T="	"
-		local PT=${config_gen_pl_pro_util[PERL_TEMPLATE]}
 		local AN=${config_gen_pl_pro_util[AUTHOR_NAME]}
 		local AE=${config_gen_pl_pro_util[AUTHOR_EMAIL]}
-		local USER=${config_gen_pl_pro_util[USER]}
-		local GROUP=${config_gen_pl_pro_util[GROUP]}
-		local V=${config_gen_pl_pro_util[VERSION]}
-		local PLF="${PN}/bin/${PN}.pl" PLT="${GEN_PL_PRO_HOME}/conf/${PT}"
+		local USERID=${config_gen_pl_pro_util[USER]}
+		local GROUPID=${config_gen_pl_pro_util[GROUP]}
+		local V=${config_gen_pl_pro_util[VERSION]} PT=${project_set[PL_TOOL]}
+		local PLF="${PDIR}/bin/${PN}.pl"
+		local PLT="${GEN_PL_PRO_HOME}/conf/${PT}"
+		MSG="Generating file [${PLF}]!"
+		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 		while read PL
 		do
 			eval echo "${PL}" >> ${PLF}
 		done < ${PLT}
-		MSG="Generating directory [${PN}/conf/]!"
+		local PLET=${project_set[PL_EDIT]}
+		local PLETF=$(cat "${GEN_PL_PRO_HOME}/conf/${PLET}")
+		local PLEF="${PDIR}/bin/.editorconfig"
+		MSG="Generating file [${PLEF}]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		mkdir "${PN}/conf/"
-		MSG="Generating file [${PN}/conf/${PN}.cfg]!"
+		echo -e "${PLETF}" > "${PLEF}"
+		MSG="Generating directory [${PDIR}/conf/]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		local CFG="${PN}/conf/${PN}.cfg" CL
-		local CT=${config_gen_pl_pro_util[CFG_TEMPLATE]}
+		mkdir "${PDIR}/conf/"
+		local CFGET=${project_set[CFG_EDIT]}
+		local CFGETF=$(cat "${GEN_PL_PRO_HOME}/conf/${CFGET}")
+		local CFGEF="${PDIR}/conf/.editorconfig"
+		MSG="Generating file [${CFGEF}]"
+		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
+		echo -e "${CFGETF}" > "${CFGEF}"
+		local CFG="${PDIR}/conf/${PN}.cfg" CL CT=${project_set[TOOL_CFG]}
 		local CFGT="${GEN_PL_PRO_HOME}/conf/${CT}"
+		MSG="Generating file [${CFG}]"
+		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 		while read CL
 		do
 			eval echo "${CL}" >> ${CFG}
 		done < ${CFGT}
-		MSG="Generating file [${PN}/conf/${PN}_util.cfg]"
+		local CFGET=${project_set[CFG_EDIT]}
+		local CFGETF=$(cat "${GEN_PL_PRO_HOME}/conf/${CFGET}")
+		local CFGEF="${PDIR}/conf/.editorconfig"
+		MSG="Generating file [${CFGEF}]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		local CFGU="${PN}/conf/${PN}_util.cfg"
-		local CTU=${config_gen_pl_pro_util[CFG_UTIL_TEMPLATE]}
+		echo -e "${CFGETF}" > "${CFGEF}"
+		local CFGU="${PDIR}/conf/${PN}_util.cfg"
+		local CTU=${project_set[TOOL_UTIL_CFG]}
 		local CFGTU="${GEN_PL_PRO_HOME}/conf/${CTU}"
+		MSG="Generating file [${CFGU}]"
+		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 		while read CL
 		do
 			eval echo "${CL}" >> ${CFGU}
 		done < ${CFGTU}
-		MSG="Generating directory [${PN}/log/]"
+		MSG="Generating directory [${PDIR}/log/]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		mkdir "${PN}/log/"
-		MSG="Generating file [${PN}/log/${PN}.log]"
+		mkdir "${PDIR}/log/"
+		MSG="Generating file [${PDIR}/log/${PN}.log]"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		touch "${PN}/log/${PN}.log"
+		touch "${PDIR}/log/${PN}.log"
+		local LOGET=${project_set[LOG_EDIT]}
+		local LOGETF=$(cat "${GEN_PL_PRO_HOME}/conf/${LOGET}")
+		local LOGEF="${PDIR}/log/.editorconfig"
+		MSG="Generating file [${LOGEF}]"
+		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
+		echo -e "${LOGETF}" > "${LOGEF}"
 		MSG="Set owner!"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
 		local USRID=${config_gen_pl_pro_util[UID]}
 		local GRPID=${config_gen_pl_pro_util[GID]}
-		eval "chown -R ${USRID}.${GRPID} ${PN}/"
+		eval "chown -R ${USRID}.${GRPID} ${PDIR}/"
 		MSG="Set permission!"
 		__info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-		eval "chmod -R 700 ${PN}/"
-		MSG="Generated project structure [${PN}]"
+		eval "chmod -R 700 ${PDIR}/"
+		MSG="Generated project structure [${PDIR}]"
 		GEN_PL_PRO_LOGGING[LOG_MSGE]="$MSG"
 		GEN_PL_PRO_LOGGING[LOG_FLAG]="info"
 		__logging GEN_PL_PRO_LOGGING
@@ -165,7 +199,7 @@ function __gen_pl_pro() {
 		__check_tool "${TREE}"
 		STATUS=$?
 		if [ $STATUS -eq $SUCCESS ]; then
-			eval "${TREE} -L 3 ${PN}/"
+			eval "${TREE} -L 3 ${PDIR}/"
 		fi
 		exit 0
 	fi
@@ -182,6 +216,7 @@ function __gen_pl_pro() {
 #			128 - missing argument(s) from cli
 #			129 - failed to load tool script configuration from files
 #			130 - project already exist
+#			131 - failed to load project set configuration from file
 #
 printf "\n%s\n%s\n\n" "${GEN_PL_PRO_TOOL} ${GEN_PL_PRO_VERSION}" "`date`"
 __check_root

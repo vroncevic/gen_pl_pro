@@ -1,4 +1,4 @@
-gen_pl_pro
+GEN_PL_PRO
 -----------
 
 .. toctree::

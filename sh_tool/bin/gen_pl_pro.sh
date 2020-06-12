@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # @brief   Generate Perl Tool Project
-# @version ver.1.0
+# @version ver.1.0.0
 # @date    Thu Feb 07 00:46:32 2016
 # @company None, free software to use 2016
 # @author  Vladimir Roncevic <elektron.ronca@gmail.com>

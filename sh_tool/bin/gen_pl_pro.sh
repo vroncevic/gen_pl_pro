@@ -28,11 +28,11 @@ GEN_PL_PRO_CFG=${GEN_PL_PRO_HOME}/conf/${GEN_PL_PRO_TOOL}.cfg
 GEN_PL_PRO_UTIL_CFG=${GEN_PL_PRO_HOME}/conf/${GEN_PL_PRO_TOOL}_util.cfg
 GEN_PL_PRO_LOG=${GEN_PL_PRO_HOME}/log
 
-declare -A GENPLPRO_USAGE=(
-    [USAGE_TOOL]="${GEN_PL_PRO_TOOL}"
-    [USAGE_ARG1]="[PN] Perl App Project name"
-    [USAGE_EX_PRE]="# Generating Perl App project"
-    [USAGE_EX]="${GEN_PL_PRO_TOOL} RCP"
+declare -A GENPLPRO_Usage=(
+    [Usage_TOOL]="${GEN_PL_PRO_TOOL}"
+    [Usage_ARG1]="[PN] Perl App Project name"
+    [Usage_EX_PRE]="# Generating Perl App project"
+    [Usage_EX]="${GEN_PL_PRO_TOOL} RCP"
 )
 
 declare -A GEN_PL_PRO_LOGGING=(
@@ -204,7 +204,7 @@ function __gen_pl_pro {
         fi
         exit 0
     fi
-    usage GENPLPRO_USAGE
+    usage GENPLPRO_Usage
     exit 128
 }
 

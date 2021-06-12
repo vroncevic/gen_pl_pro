@@ -1,3 +1,5 @@
+<img align="right" src="https://raw.githubusercontent.com/vroncevic/gen_pl_pro/dev/docs/gen_pl_pro_logo.png" width="25%">
+
 # Generating Perl Project Structure
 
 **gen_pl_pro** is shell tool for creating Perl project.
@@ -32,11 +34,11 @@ Navigate to release **[page](https://github.com/vroncevic/gen_pl_pro/releases)**
 To install **gen_pl_pro** type the following:
 
 ```
-tar xvzf gen_pl_pro-x.y.z.tar.gz
-cd gen_pl_pro-x.y.z
-cp -R ~/sh_tool/bin/   /root/scripts/gen_pl_pro/ver.1.0/
-cp -R ~/sh_tool/conf/  /root/scripts/gen_pl_pro/ver.1.0/
-cp -R ~/sh_tool/log/   /root/scripts/gen_pl_pro/ver.1.0/
+tar xvzf gen_pl_pro-x.y.tar.gz
+cd gen_pl_pro-x.y
+cp -R ~/sh_tool/bin/   /root/scripts/gen_pl_pro/ver.x.y/
+cp -R ~/sh_tool/conf/  /root/scripts/gen_pl_pro/ver.x.y/
+cp -R ~/sh_tool/log/   /root/scripts/gen_pl_pro/ver.x.y/
 ```
 
 ![alt tag](https://raw.githubusercontent.com/vroncevic/gen_pl_pro/dev/docs/setup_tree.png)
@@ -49,7 +51,7 @@ Or You can use docker to create image/container.
 
 ```
 # Create symlink for shell tool
-ln -s /root/scripts/gen_pl_pro/ver.1.0/bin/gen_pl_pro.sh /root/bin/gen_pl_pro
+ln -s /root/scripts/gen_pl_pro/ver.x.y/bin/gen_pl_pro.sh /root/bin/gen_pl_pro
 
 # Setting PATH
 export PATH=${PATH}:/root/bin/
@@ -69,7 +71,7 @@ gen_pl_pro SimplePlTool
 
 Code structure:
 ```
-.
+sh_tool/
 ├── bin/
 │   └── gen_pl_pro.sh
 ├── conf/
@@ -99,7 +101,7 @@ More documentation and info at:
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Copyright (C) 2016 by [vroncevic.github.io/gen_pl_pro](https://vroncevic.github.io/gen_pl_pro)
+Copyright (C) 2017 by [vroncevic.github.io/gen_pl_pro](https://vroncevic.github.io/gen_pl_pro)
 
 **gen_pl_pro** is free software; you can redistribute it and/or modify
 it under the same terms as Bash itself, either Bash version 4.2.47 or,

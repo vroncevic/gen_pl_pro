@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # @brief   Generate Perl Tool Project
-# @version ver.1.0.0
+# @version ver.1.0
 # @date    Thu Feb 07 00:46:32 2016
 # @company None, free software to use 2016
 # @author  Vladimir Roncevic <elektron.ronca@gmail.com>
@@ -28,7 +28,7 @@ GEN_PL_PRO_CFG=${GEN_PL_PRO_HOME}/conf/${GEN_PL_PRO_TOOL}.cfg
 GEN_PL_PRO_UTIL_CFG=${GEN_PL_PRO_HOME}/conf/${GEN_PL_PRO_TOOL}_util.cfg
 GEN_PL_PRO_LOG=${GEN_PL_PRO_HOME}/log
 
-declare -A GENPLPRO_Usage=(
+declare -A GENPLPRO_USAGE=(
     [Usage_TOOL]="${GEN_PL_PRO_TOOL}"
     [Usage_ARG1]="[PN] Perl App Project name"
     [Usage_EX_PRE]="# Generating Perl App project"
@@ -185,8 +185,8 @@ function __gen_pl_pro {
         echo -e "${LOGETF}" > "${LOGEF}"
         MSG="Set owner!"
         info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
-        local USRID=${config_gen_pl_pro_util[UID]}
-        local GRPID=${config_gen_pl_pro_util[GID]}
+        local USRID=${config_gen_pl_pro_util[USERID]}
+        local GRPID=${config_gen_pl_pro_util[GROUPID]}
         eval "chown -R ${USRID}.${GRPID} ${PDIR}/"
         MSG="Set permission!"
         info_debug_message "$MSG" "$FUNC" "$GEN_PL_PRO_TOOL"
@@ -204,7 +204,7 @@ function __gen_pl_pro {
         fi
         exit 0
     fi
-    usage GENPLPRO_Usage
+    usage GENPLPRO_USAGE
     exit 128
 }
 
@@ -213,7 +213,7 @@ function __gen_pl_pro {
 # @param   Value required project name
 # @exitval Script tool gen_pl_pro exit with integer value
 #            0   - tool finished with success operation
-#             127 - run tool script as root user from cli
+#            127 - run tool script as root user from cli
 #            128 - missing argument(s) from cli
 #            129 - failed to load tool script configuration from files
 #            130 - project already exist

@@ -1,8 +1,8 @@
 ${H}"!/usr/bin/perl"
 ${H}
-${H}" @brief	${PN}"
+${H}" @brief    ${PN}"
 ${H}" @version  ${V}"
-${H}" @date	 ${DATE}"
+${H}" @date     ${DATE}"
 ${H}" @company  ${UTIL_FROM_COMPANY}"
 ${H}" @author   ${AN}<${AE}>"
 ${H}

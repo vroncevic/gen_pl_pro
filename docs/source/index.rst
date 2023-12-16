@@ -7,8 +7,8 @@ Developed in `bash <https://en.wikipedia.org/wiki/Bash_(Unix_shell)>`_ code: **1
 
 |GitHub shell checker|
 
-.. |GitHub shell checker| image:: https://github.com/vroncevic/gen_pl_pro/workflows/gen_pl_pro%20shell%20checker/badge.svg
-   :target: https://github.com/vroncevic/gen_pl_pro/actions?query=workflow%3A%22gen_pl_pro+shell+checker%22
+.. |GitHub shell checker| image:: https://github.com/vroncevic/gen_pl_pro/actions/workflows/gen_pl_pro_shell_checker.yml/badge.svg
+   :target: https://github.com/vroncevic/gen_pl_pro/actions/workflows/gen_pl_pro_shell_checker.yml
 
 The README is used to introduce the tool and provide instructions on
 how to install the tool, any machine dependencies it may have and any
@@ -23,7 +23,7 @@ other information that should be provided before the tool is installed.
    :target: https://github.com/vroncevic/gen_pl_pro/graphs/contributors
 
 .. |Documentation Status| image:: https://readthedocs.org/projects/gen_pl_pro/badge/?version=latest
-   :target: https://gen_pl_pro.readthedocs.io/projects/gen_pl_pro/en/latest/?badge=latest
+   :target: https://gen-pl-pro.readthedocs.io/projects/gen_pl_pro/en/latest/?badge=latest
 
 .. toctree::
     :hidden:
@@ -33,16 +33,11 @@ other information that should be provided before the tool is installed.
 Installation
 -------------
 
-|Debian Linux OS|
-
-.. |Debian Linux OS| image:: https://raw.githubusercontent.com/vroncevic/gen_pl_pro/dev/docs/debtux.png
-   :target: https://www.debian.org
-
 Navigate to release `page`_ download and extract release archive.
 
 .. _page: https://github.com/vroncevic/gen_pl_pro/releases
 
-To install **gen_pl_pro** type the following
+To install **gen_pl_pro** type the following:
 
 .. code-block:: bash
 
@@ -54,15 +49,10 @@ To install **gen_pl_pro** type the following
 
 Or You can use Docker to create image/container.
 
-|GitHub docker checker|
-
-.. |GitHub docker checker| image:: https://github.com/vroncevic/gen_pl_pro/workflows/gen_pl_pro%20docker%20checker/badge.svg
-   :target: https://github.com/vroncevic/gen_pl_pro/actions?query=workflow%3A%22gen_pl_pro+docker+checker%22
-
 Dependencies
 -------------
 
-**gen_pl_pro** requires next modules and libraries
+**gen_pl_pro** requires next modules and libraries:
 
 * sh_util `https://github.com/vroncevic/sh_util <https://github.com/vroncevic/sh_util>`_
 
@@ -71,18 +61,15 @@ Shell tool structure
 
 **gen_pl_pro** is based on MOP.
 
-Shell tool structure
+Code structure:
 
 .. code-block:: bash
 
    sh_tool/
    ├── bin/
-   │   ├── center.sh
-   │   ├── display_logo.sh
    │   └── gen_pl_pro.sh
    ├── conf/
    │   ├── gen_pl_pro.cfg
-   │   ├── gen_pl_pro.logo
    │   ├── gen_pl_pro_util.cfg
    │   ├── project_set.cfg
    │   └── template/
@@ -106,7 +93,7 @@ Copyright and licence
 .. |License: Apache 2.0| image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
    :target: https://opensource.org/licenses/Apache-2.0
 
-Copyright (C) 2017 by `vroncevic.github.io/gen_pl_pro <https://vroncevic.github.io/gen_pl_pro>`_
+Copyright (C) 2017 - 2024 by `vroncevic.github.io/gen_pl_pro <https://vroncevic.github.io/gen_pl_pro>`_
 
 **gen_pl_pro** is free software; you can redistribute it and/or modify it
 under the same terms as Bash itself, either Bash version 4.2.47 or,

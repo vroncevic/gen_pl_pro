@@ -1,6 +1,6 @@
-<img align="right" src="https://raw.githubusercontent.com/vroncevic/gen_pl_pro/dev/docs/gen_pl_pro_logo.png" width="25%">
-
 # Generating Perl Project Structure
+
+<img align="right" src="https://raw.githubusercontent.com/vroncevic/gen_pl_pro/dev/docs/gen_pl_pro_logo.png" width="25%">
 
 **gen_pl_pro** is shell tool for creating Perl project.
 
@@ -33,7 +33,7 @@ Navigate to release **[page](https://github.com/vroncevic/gen_pl_pro/releases)**
 
 To install **gen_pl_pro** type the following:
 
-```
+```bash
 tar xvzf gen_pl_pro-x.y.tar.gz
 cd gen_pl_pro-x.y
 cp -R ~/sh_tool/bin/   /root/scripts/gen_pl_pro/ver.x.y/
@@ -47,7 +47,7 @@ Or You can use docker to create image/container.
 
 ### Usage
 
-```
+```bash
 # Create symlink for shell tool
 ln -s /root/scripts/gen_pl_pro/ver.x.y/bin/gen_pl_pro.sh /root/bin/gen_pl_pro
 
@@ -67,8 +67,9 @@ gen_pl_pro SimplePlTool
 
 **gen_pl_pro** is based on MOP.
 
-Code structure:
-```
+Code structure
+
+```bash
 sh_tool/
 ├── bin/
 │   └── gen_pl_pro.sh

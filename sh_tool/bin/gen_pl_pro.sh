@@ -20,19 +20,21 @@ UTIL_LOG=${UTIL}/log
 .    ${UTIL}/bin/load_conf.sh
 .    ${UTIL}/bin/load_util_conf.sh
 .    ${UTIL}/bin/progress_bar.sh
+.    ${UTIL}/bin/display_logo.sh
 
 GEN_PL_PRO_TOOL=gen_pl_pro
-GEN_PL_PRO_VERSION=ver.1.0
+GEN_PL_PRO_VERSION=ver.3.0
 GEN_PL_PRO_HOME=${UTIL_ROOT}/${GEN_PL_PRO_TOOL}/${GEN_PL_PRO_VERSION}
 GEN_PL_PRO_CFG=${GEN_PL_PRO_HOME}/conf/${GEN_PL_PRO_TOOL}.cfg
 GEN_PL_PRO_UTIL_CFG=${GEN_PL_PRO_HOME}/conf/${GEN_PL_PRO_TOOL}_util.cfg
+GEN_PL_PRO_LOGO=${GEN_PL_PRO_HOME}/conf/${GEN_PL_PRO_TOOL}.logo
 GEN_PL_PRO_LOG=${GEN_PL_PRO_HOME}/log
 
 declare -A GENPLPRO_USAGE=(
-    [Usage_TOOL]="${GEN_PL_PRO_TOOL}"
-    [Usage_ARG1]="[PN] Perl App Project name"
-    [Usage_EX_PRE]="# Generating Perl App project"
-    [Usage_EX]="${GEN_PL_PRO_TOOL} RCP"
+    [USAGE_TOOL]="${GEN_PL_PRO_TOOL}"
+    [USAGE_ARG1]="[PN] Perl App Project name"
+    [USAGE_EX_PRE]="# Generating Perl App project"
+    [USAGE_EX]="${GEN_PL_PRO_TOOL} RCP"
 )
 
 declare -A GEN_PL_PRO_LOGGING=(
@@ -70,6 +72,7 @@ TOOL_NOTIFY="false"
 function __gen_pl_pro {
     local PN=$1
     if [ -n "${PN}" ]; then
+        display_logo "vroncevic" "${GEN_PL_PRO_TOOL}" "${GEN_PL_PRO_VERSION}" "${GEN_PL_PRO_LOGO}"
         local FUNC=${FUNCNAME[0]} MSG="None"
         local STATUS_CONF STATUS_CONF_UTIL STATUS
         MSG="Loading basic and util configuration!"
